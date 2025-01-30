@@ -1,0 +1,137 @@
+{% load static %}
+
+<style>
+  .blog-footer {
+    background-color: #343a40;
+    color: #ffffff;
+  }
+  
+  .blog-footer h5 {
+    font-weight: bold;
+    color: #ffc107;
+  }
+  
+  .blog-footer p,
+  .blog-footer a {
+    font-size: 14px;
+  }
+  
+  .blog-footer a:hover {
+    text-decoration: underline;
+    color: #ffcc00;
+  }
+  
+  .blog-footer ul {
+    padding: 0;
+    list-style: none;
+  }
+  
+  .blog-footer ul li {
+    margin-bottom: 8px;
+  }
+  
+  .blog-footer ul li a {
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+  
+  .blog-footer ul.d-flex li {
+    margin-right: 15px;
+  }
+  
+  .blog-footer ul.d-flex li a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .blog-footer ul.d-flex li a i {
+    font-size: 18px;
+  }
+  
+  @media (max-width: 768px) {
+    .blog-footer ul.d-flex {
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+  
+    .blog-footer ul.d-flex li {
+      margin-right: 10px;
+      margin-bottom: 8px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .blog-footer h5 {
+      font-size: 16px;
+    }
+  
+    .blog-footer p,
+    .blog-footer a {
+      font-size: 12px;
+    }
+  
+    .blog-footer ul li a {
+      font-size: 12px;
+    }
+  
+    .blog-footer ul.d-flex li a i {
+      font-size: 16px;
+    }
+  }
+</style>
+
+<footer class="blog-footer py-4 bg-dark text-white">
+  <div class="container">
+    <div class="row">
+      <!-- About Section -->
+      <div class="col-md-4 col-sm-12 mb-4">
+        <h5 class="text-uppercase mb-3">About</h5>
+        <p>
+          This blog is a platform to share insightful articles, tutorials, and news. Built with passion and Django by,
+          <a href="#" class="text-warning">Manoj Paloi</a>
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-4 col-sm-6 mb-4">
+        <h5 class="text-uppercase mb-3">Quick Links</h5>
+        <ul class="list-unstyled">
+          {% for cat in categories %}
+            <li>
+              <a href="{% url 'posts_by_category' cat.id %}" class="text-light text-decoration-none">{{ cat.category_name }}</a>
+            </li>
+          {% endfor %}
+          <!--    <li><a href="#" class="text-light text-decoration-none">About</a></li>
+          <li><a href="#" class="text-light text-decoration-none">Contact</a></li>
+          <li><a href="#" class="text-light text-decoration-none">Privacy Policy</a></li>    -->
+        </ul>
+      </div>
+
+      <!-- Follow Us -->
+      <div class="col-md-4 col-sm-6 mb-4">
+        <h5 class="text-uppercase mb-3">Follow Us</h5>
+        <ul class="list-unstyled d-flex flex-wrap">
+          <li class="me-3">
+            <a href="#" class="text-light text-decoration-none d-flex align-items-center" style="padding-left: 2rem;"><i class="fab fa-facebook-f me-2"></i> Facebook</a>
+          </li>
+          <li class="me-3">
+            <a href="#" class="text-light text-decoration-none d-flex align-items-center"><i class="fab fa-twitter me-2"></i> Twitter</a>
+          </li>
+          <li class="me-3">
+            <a href="#" class="text-light text-decoration-none d-flex align-items-center"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a>
+          </li>
+          <li class="me-3">
+            <a href="#" class="text-light text-decoration-none d-flex align-items-center"><i class="fab fa-linkedin-in me-2"></i> GitHub</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="border-secondary my-4" />
+
+    <div class="text-center">
+      <p class="mb-0">© 2025 Manoj Paloi. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

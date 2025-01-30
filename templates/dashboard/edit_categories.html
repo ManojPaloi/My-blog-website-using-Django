@@ -1,0 +1,26 @@
+{% extends '../base/base.html' %}
+{% block content %}
+  <div class="row">
+    <div class="col-md-3">
+      <!-- Sidebar -->
+      <div class="nav flex-column nav-pills bg-light p-3" aria-orientation="vertical">
+        <a href="{% url 'dashboard' %}" class="nav-link text-dark">Dashboard</a>
+        <a href="{% url 'categories' %}" class="nav-link text-dark bg-warning active">Categories</a>
+        <a href="#" class="nav-link text-dark">Posts</a>
+        <a href="{% url 'logout' %}" class="nav-link text-danger">Logout</a>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="row">
+        {% load crispy_forms_tags %}
+        <h3 class="text-center my-3">Edit Category</h3>
+
+        <form action="{% url 'edit_categories' category.id %}" method="POST" class="mx-auto" style="width: 500px;">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <button type="submit" class="btn btn-warning">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

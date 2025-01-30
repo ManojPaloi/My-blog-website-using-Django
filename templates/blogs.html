@@ -1,0 +1,33 @@
+{% extends './base/base.html' %}
+
+{% block content %}
+  <!-- Page content -->
+  <div class="container">
+    <div class="d-flex">
+      <div class="col-sm-10">
+        <!-- Post content -->
+        <article class="justify-content-between align-items-center">
+          <!-- Post header -->
+          <header class="mb-4">
+            <!-- Post title -->
+            <h1 class="fw-bolder mb-1">{{ single_post.title }}</h1>
+            <!-- Post meta content -->
+            <div class="text-muted fst-italic mb-2">Posted on January {{ single_post.created_at }} by {{ single_post.author }}</div>
+            <!-- Post category -->
+            <a class="badge bg-warning text-decoration-none text-light" href="#!">{{ single_post.Category }}</a>
+          </header>
+          <!-- Preview image figure -->
+          <figure class="mb-4">
+            <img class="img-fluid rounded" src="{{ single_post.blog_image.url }}" alt="{{ single_post.title }}" />
+          </figure>
+
+          <!-- Post content -->
+          <section class="mb-5">
+            <p class="fs-5 mb-4">{{ single_post.short_description }}</p>
+            <p class="fs-5 mb-4">{{ single_post.blog_body }}</p>
+          </section>
+        </article>
+      </div>
+    </div>
+  </div>
+{% endblock %}

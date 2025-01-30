@@ -1,0 +1,51 @@
+{% extends '../base/base.html' %}
+{% block content %}
+  <div class="row">
+    <div class="col-md-3">
+      <!-- Sidebar -->
+      <div class="nav flex-column nav-pills bg-light p-3" aria-orientation="vertical">
+        <a href="{% url 'dashboard' %}" class="nav-link text-dark">Dashboard</a>
+        <a href="" class="nav-link text-dark bg-warning active">Categories</a>
+        <a href="#" class="nav-link text-dark">Posts</a>
+        <a href="#" class="nav-link text-danger">Logout</a>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="row">
+        <!-- Categories Card -->
+        {% comment %} {% include './leftsidebar.html' %} {% endcomment %}
+
+        <!-- Posts Card -->
+
+        <h3 class="text-center">Add Categories</h3>
+        <a href=" {% url 'add_categories' %} " class="btn btn-success mb-3" style="margin-left: 30rem;">Add New Category</a>
+
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Category Name</th>
+              <th>Created AT</th>
+              <th>Updated AT</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for cat in categories %}
+              <tr>
+                <th>{{ forloop.counter }}</th>
+                <td>{{ cat.category_name }}</td>
+                <td>{{ cat.created_at }}</td>
+                <td>{{ cat.updatrd_at }}</td>
+                <td>
+                  <a href=" {% url 'edit_categories' cat.id %} "><i class="fa fa-edit text-success"></i></a> &nbsp;
+                  <a href="{% url 'delete_categories' cat.id %}"><i class="fa fa-trash text-danger"></i></a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
