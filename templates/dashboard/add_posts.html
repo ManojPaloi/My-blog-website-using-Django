@@ -1,26 +1,28 @@
 {% extends '../base/base.html' %}
 {% block content %}
-  <div class="row">
+
+<div class="row">
     <div class="col-md-3">
       <!-- Sidebar -->
       <div class="nav flex-column nav-pills bg-light p-3" aria-orientation="vertical">
         <a href="{% url 'dashboard' %}" class="nav-link text-dark">Dashboard</a>
-        <a href="{% url 'categories' %}" class="nav-link text-dark bg-warning active">Categories</a>
-        <a href="{% url 'posts' %}" class="nav-link text-dark">Posts</a>
+        <a href="{% url 'categories' %}" class="nav-link text-dark">Categories</a>
+        <a href="{% url 'add_posts' %}" class="nav-link text-dark bg-warning active">Posts</a>
         <a href="{% url 'logout' %}" class="nav-link text-danger">Logout</a>
       </div>
     </div>
     <div class="col-md-9">
       <div class="row">
         {% load crispy_forms_tags %}
-        <h3 class="text-center my-3">Add Categories</h3>
+        <h3 class="text-center my-3">Add New Posts</h3>
 
-        <form action="" method="POST" class="mx-auto" style="width: 500px;">
+        <form action="{% url 'add_posts' %}" method="POST" class="mx-auto" style="width: 500px;" enctype="multipart/form-data">
           {% csrf_token %}
-          {{ form |crispy }}
+          {{ form|crispy }}
           <button type="submit" class="btn btn-warning">Submit</button>
         </form>
       </div>
     </div>
-  </div>
+</div>
+
 {% endblock %}

@@ -1,0 +1,30 @@
+{% extends '../base/base.html' %}
+{% block content %}
+  <div class="row">
+    <div class="col-md-3">
+      <!-- Sidebar -->
+      <div class="nav flex-column nav-pills bg-light p-3" aria-orientation="vertical">
+        <a href="{% url 'dashboard' %}" class="nav-link text-dark">Dashboard</a>
+        <a href="{% url 'categories' %}" class="nav-link text-dark">Categories</a>
+        <a href="{% url 'posts' %}" class="nav-link text-dark bg-warning active">Posts</a>
+        <a href="{% url 'logout' %}" class="nav-link text-danger">Logout</a>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <div class="row">
+        <h3 class="text-center my-3 text-danger">Delete Post</h3>
+        <p class="text-center">Are you sure you want to delete the post "<strong>{{ post.title }}</strong>"?</p>
+
+        <form action="{% url 'delete_posts' pk=post.pk %}" method="POST">
+            {% csrf_token %}
+            <p>Are you sure you want to delete the post titled: <strong>{{ post.title }}</strong>?</p>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a href="{% url 'posts' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+        
+        
+      </div>
+    </div>
+  </div>
+{% endblock %}

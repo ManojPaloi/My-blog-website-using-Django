@@ -3,9 +3,16 @@ from blogs.models import Category,Blogs
 from .forms import RegistrationForm  
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 
 
 
+
+
+
+@login_required(login_url='login')
+@never_cache
 def home(request):
     
     categories = Category.objects.all()
@@ -18,6 +25,12 @@ def home(request):
         'posts': posts
     }
     return render(request, 'home.html', context)
+
+
+
+
+
+
 
 
 def register (request):
@@ -54,27 +67,19 @@ def login (request):
             if user is not None:
                 auth.login(request, user)
                 return redirect ('dashboard')
-
-
-
-
-
     else:
         form = AuthenticationForm()
-
-        
 
     context = {
         'form':form
     }
-
-
     return render (request, 'login.html', context)
 
 
 
 
-
+@login_required(login_url='login')
+@never_cache
 def logout (request):
     auth.logout(request)
     return redirect ('home')
