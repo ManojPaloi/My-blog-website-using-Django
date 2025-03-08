@@ -1,14 +1,33 @@
 {% extends './base/base.html' %}
+
 {% block content %}
   <div class="container mt-5">
     <h3 class="text-center mb-4 text-primary">Login to Your Account</h3>
+
+    <!-- Success/Error Messages -->
+    {% if messages %}
+      <div class="container">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show text-center" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     {% load crispy_forms_tags %}
+
     <form action="{% url 'login' %}" method="POST" class="bg-white p-5 rounded shadow" style="max-width: 500px; margin: auto; border: 1px solid #ddd;">
-      {% csrf_token %}
-      <div class="mb-4">{{ form|crispy }}</div>
+      {% csrf_token %} <!-- ✅ CSRF token is important -->
+      <div class="mb-4">
+        {{ form|crispy }} <!-- Using crispy forms -->
+      </div>
+
       <div class="d-flex justify-content-center mt-3">
         <button type="submit" class="btn btn-warning btn-lg">Login</button>
       </div>
+
       <div class="text-center mt-4">
         <p>
           <span style="color: #555;">Don't have an account?</span>
@@ -17,4 +36,16 @@
       </div>
     </form>
   </div>
+
+  <!-- Auto-dismiss Messages After 5 Seconds -->
+  <script>
+    setTimeout(function () {
+      let alerts = document.querySelectorAll('.alert')
+      alerts.forEach((alert) => {
+        alert.style.transition = 'opacity 0.5s'
+        alert.style.opacity = '0'
+        setTimeout(() => alert.remove(), 500)
+      })
+    }, 5000)
+  </script>
 {% endblock %}

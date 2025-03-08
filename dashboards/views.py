@@ -4,6 +4,12 @@ from django.contrib.auth.decorators import login_required
 from .forms import CategoryForm,BlogPostForm
 from django.shortcuts import get_object_or_404
 from django.views.decorators.cache import never_cache
+from django.contrib.auth.models import User
+from .forms import UserCreateForm, UserEditForm
+from .forms import AddUserForm
+from django.contrib import messages
+
+
 
 
 
@@ -147,13 +153,78 @@ def edit_posts(request, pk):
 
 @login_required(login_url='login')
 @never_cache
-
-
 def delete_posts(request, pk):
     post = get_object_or_404(Blogs, pk=pk)
     
     post.delete()
     return redirect('posts')  # Redirect to 'posts' view after deletion
 
+
+
+
+
+
+
+@login_required(login_url='login')
+@never_cache
+def users(request):
+    users = User.objects.all().order_by('id')  # Sorting users by ID
+    return render(request, 'dashboard/users.html', {'users': users})
+
+
   
 
+
+
+
+
+@login_required(login_url='login')
+@never_cache
+def add_user(request):
+    if request.method == 'POST':
+        form = AddUserForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])  # Securely set password
+            user.save()
+            messages.success(request, 'User has been successfully added!')
+            return redirect('users')  # Redirect to users list
+        else:
+            messages.error(request, 'Error adding user. Please check the form.')
+    else:
+        form = AddUserForm()
+
+    context = {'form': form}
+    return render(request, 'dashboard/add_user.html', context)
+
+
+
+
+
+@login_required(login_url='login')
+@never_cache
+def edit_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)  # Get user by ID
+    if request.method == 'POST':
+        form = AddUserForm(request.POST, instance=user)  # Pass instance to form
+        if form.is_valid():
+            form.save()
+            return redirect('users')  # Redirect after successful save
+    else:
+        form = AddUserForm(instance=user)  # Pre-fill form with user data
+
+    return render(request, 'dashboard/edit_user.html', {'form': form})
+
+
+
+
+# Delete User View
+@login_required(login_url='login')
+@never_cache
+def delete_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':  # Delete on confirmation
+        user.delete()
+        return redirect('users')
+    
+    return render(request, 'dashboard/delete_user.html', {'user': user})

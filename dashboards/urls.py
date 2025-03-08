@@ -19,4 +19,10 @@ urlpatterns = [
     path('posts/add', views.add_posts, name='add_posts'),   
     path('posts/edit/<int:pk>/', views.edit_posts, name='edit_posts'),
     path('posts/delete/<int:pk>/', views.delete_posts, name='delete_posts'),
+    
+    
+    path('users/', views.users, name= 'users'),
+     path('users/add_user/', views.add_user, name='add_user'),
+    path('users/edit/<int:user_id>/', views.edit_user, name='edit_user'),
+    path('users/delete/<int:user_id>/', views.delete_user, name='delete_user'),
 ]
